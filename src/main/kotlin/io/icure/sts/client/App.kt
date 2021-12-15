@@ -22,8 +22,8 @@ import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
 data class Message(val action: String, val keystoreId: String? = null, val name: String? = null, val digestType: String? = null, val data: String? = null)
-class App {
-    val log = LogFactory.getLog(this::class.java)
+class App(private val host: String) {
+    private val log = LogFactory.getLog(this::class.java)
     fun start() {
         val lock = ReentrantLock()
         var shouldReconnect = true
@@ -103,7 +103,7 @@ class App {
             lock.withLock {
                 if (shouldReconnect) {
                     shouldReconnect = false
-                    stompClient.connect("ws://localhost:8090/ws", sessionHandler)
+                    stompClient.connect(host, sessionHandler)
                 }
             }
             Thread.sleep(5000)
@@ -111,11 +111,11 @@ class App {
     }
 }
 
-fun main() {
+fun main(args: Array<String>) {
     System.setProperty(
         "sun.security.smartcardio.library",
         "/System/Library/Frameworks/PCSC.framework/Versions/Current/PCSC"
     )
 
-    App().start()
+    App(args.firstOrNull() ?: "ws://localhost:8090/ws").start()
 }

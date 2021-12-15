@@ -8,4 +8,3 @@
  */
 
 rootProject.name = "STSClient"
-include("app")
