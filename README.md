@@ -10,4 +10,5 @@ You can use the keystore id in the command below:
 
 that returns the token:
 
+
 ```{"tokenId":"83716024-568e-45a1-8b43-e094ef5db472","token":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>...","timestamp":1639584028731,"validity":1639670442417,"quality":"doctor"```
